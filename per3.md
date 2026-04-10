@@ -1,5 +1,5 @@
 ## DATABASE
-![alt text](image.png)
+![alt text](per3/image.png)
 
 ## STRUKTUR
 ![alt text](per3/image-1.png)
