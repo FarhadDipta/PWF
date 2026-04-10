@@ -12,10 +12,12 @@
                             <p class="text-sm text-gray-400">Manage your product inventory</p>
                         </div>
 
-                        <a href="{{ route('product.create') }}"
-                           class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg shadow">
-                            Add Product
-                        </a>
+                        @can('manage-product')
+                            <a href="{{ route('product.create') }}"
+                            class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg shadow">
+                                Add Product
+                            </a>
+                        @endcan
                     </div>
 
                     <!-- Flash Message -->
@@ -59,20 +61,24 @@
                                             <a href="{{ route('product.show', $product->id) }}"
                                                class="text-blue-500">View</a>
 
-                                            <a href="{{ route('product.edit', $product->id) }}"
-                                               class="text-yellow-500 mx-2">Edit</a>
+                                            @can('update', $product)
+                                                <a href="{{ route('product.edit', $product->id) }}"
+                                                class="text-yellow-500 mx-2">Edit</a>
+                                            @endcan
 
-                                            <form action="{{ route('product.delete', $product->id) }}"
-                                                  method="POST"
-                                                  style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    onclick="return confirm('Delete this product?')"
-                                                    class="text-red-500">
-                                                    Delete
-                                                </button>
-                                            </form>
+                                            @can('delete', $product)
+                                                <form action="{{ route('product.delete', $product->id) }}"
+                                                    method="POST"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        onclick="return confirm('Delete this product?')"
+                                                        class="text-red-500">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty

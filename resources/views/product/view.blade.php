@@ -22,21 +22,27 @@
 
                         <!-- Actions -->
                         <div class="flex items-center gap-2">
-                            <a href="{{ route('product.edit', $product->id) }}"
-                               class="px-3 py-2 border rounded-lg text-yellow-500">
-                                Edit
-                            </a>
 
-                            <form action="{{ route('product.delete', $product->id) }}"
-                                  method="POST"
-                                  onsubmit="return confirm('Are you sure want to delete this product?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="px-3 py-2 border rounded-lg text-red-500">
-                                    Delete
-                                </button>
-                            </form>
+                            @can('update', $product)
+                                <a href="{{ route('product.edit', $product->id) }}"
+                                class="px-3 py-2 border rounded-lg text-yellow-500">
+                                    Edit
+                                </a>
+                            @endcan
+
+                            @can('delete', $product)
+                                <form action="{{ route('product.delete', $product->id) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Are you sure want to delete this product?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="px-3 py-2 border rounded-lg text-red-500">
+                                        Delete
+                                    </button>
+                                </form>
+                            @endcan
+
                         </div>
                     </div>
 

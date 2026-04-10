@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProductController extends Controller
 {
+    use AuthorizesRequests;
     public function index()
     {
         $products = Product::all();
@@ -19,7 +21,7 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'quantity' => 'required|integer',
+            'qty' => 'required|integer',
             'price' => 'required|numeric',
             'user_id' => 'required|exists:users,id',
         ]);
@@ -47,9 +49,11 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
+        $this->authorize('update', $product);
+
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
-            'quantity' => 'sometimes|integer',
+            'qty' => 'sometimes|integer',
             'price' => 'sometimes|numeric',
             'user_id' => 'sometimes|exists:users,id',
         ]);
@@ -69,6 +73,8 @@ class ProductController extends Controller
     public function delete($id)
     {
         $product = Product::findOrFail($id);
+
+        $this->authorize('delete', $product);
 
         $product->delete();
 
