@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -21,14 +22,50 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'qty' => 'required|integer',
-            'price' => 'required|numeric',
-            'user_id' => 'required|exists:users,id',
+            'qty' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+        ], [
+            'name.required' => 'Nama produk wajib diisi.',
+            'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter.',
+
+            'qty.required' => 'Jumlah (kuantitas) produk wajib diisi.',
+            'qty.integer' => 'Jumlah produk harus berupa angka bulat (tidak boleh desimal).',
+            'qty.min' => 'Jumlah produk harus lebih besar dari 0.',
+
+            'price.required' => 'Harga produk wajib diisi.',
+            'price.numeric' => 'Harga produk harus berupa angka yang valid.',
+            'price.min' => 'Harga produk harus lebih besar dari 0. Bisa menggunakan 0 untuk produk gratis.',
         ]);
 
-        $product = Product::create($validated);
+        $validated['user_id'] = Auth::id();
 
-        return redirect()->route('product.index')->with('success', 'Product created successfully.');
+        try {
+            Product::create($validated);
+
+            return redirect()
+                ->route('product.index')
+                ->with('success', 'Product created successfully.');
+
+        } catch (\Illuminate\Database\QueryException $e) {
+            Log::error('Product store database error', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Database error while creating product.');
+
+        } catch (\Throwable $e) {
+            Log::error('Product store unexpected error', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Unexpected error occurred.');
+        }
     }
 
     public function create()
@@ -53,8 +90,8 @@ class ProductController extends Controller
 
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
-            'qty' => 'sometimes|integer',
-            'price' => 'sometimes|numeric',
+            'qty' => 'sometimes|integer|min:1',
+            'price' => 'sometimes|numeric|min:0',
             'user_id' => 'sometimes|exists:users,id',
         ]);
 
