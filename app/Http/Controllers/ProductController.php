@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,9 +90,9 @@ class ProductController extends Controller
         $this->authorize('update', $product);
 
         $validated = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'qty' => 'sometimes|integer|min:1',
-            'price' => 'sometimes|numeric|min:0',
+            'name' => 'required|string|max:255',
+            'qty' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
             'user_id' => 'sometimes|exists:users,id',
         ]);
 

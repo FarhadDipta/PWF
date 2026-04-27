@@ -36,9 +36,10 @@
                 20230140206
             </p>
 
-            <button class="bg-white text-black px-4 py-2 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                Modul Pertemuan 1
-            </button>
+            <a href="{{ route('dashboard') }}"
+            class="inline-block bg-white text-black px-4 py-2 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                Dashboard
+            </a>
 
         </div>
 

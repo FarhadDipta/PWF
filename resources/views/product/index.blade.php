@@ -13,10 +13,7 @@
                         </div>
 
                         @can('manage-product')
-                            <a href="{{ route('product.create') }}"
-                            class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg shadow">
-                                Add Product
-                            </a>
+                            <x-add-product url="{{ route('product.create') }}" name="Product" />
                         @endcan
                     </div>
 
@@ -57,28 +54,24 @@
                                             {{ $product->user->name ?? '-' }}
                                         </td>
 
+                                        <!-- ✅ ACTIONS (SUDAH ADA VIEW) -->
                                         <td class="px-6 py-4 text-center">
-                                            <a href="{{ route('product.show', $product->id) }}"
-                                               class="text-blue-500">View</a>
+                                            <div class="inline-flex items-center gap-4">
 
-                                            @can('update', $product)
-                                                <a href="{{ route('product.edit', $product->id) }}"
-                                                class="text-yellow-500 mx-2">Edit</a>
-                                            @endcan
+                                                <!-- VIEW -->
+                                                <a href="{{ route('product.show', $product->id) }}"
+                                                class="text-blue-500 hover:text-blue-600 text-sm">
+                                                    View
+                                                </a>
 
-                                            @can('delete', $product)
-                                                <form action="{{ route('product.delete', $product->id) }}"
-                                                    method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        onclick="return confirm('Delete this product?')"
-                                                        class="text-red-500">
-                                                        Delete
-                                                    </button>
-                                                </form>
-                                            @endcan
+                                                <!-- EDIT & DELETE -->
+                                                <x-action-button 
+                                                    :product="$product"
+                                                    editUrl="{{ route('product.edit', $product->id) }}"
+                                                    deleteUrl="{{ route('product.delete', $product->id) }}"
+                                                />
+
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty

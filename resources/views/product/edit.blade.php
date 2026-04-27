@@ -41,7 +41,9 @@
                             </label>
                             <input type="text" name="name"
                                 value="{{ old('name', $product->name) }}"
-                                class="w-full px-4 py-2 rounded-lg border">
+                                class="w-full px-4 py-2 rounded-lg border 
+                                    bg-white text-gray-900 
+                                    dark:bg-gray-700 dark:text-white">
                             @error('name')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror
@@ -55,7 +57,9 @@
                                 </label>
                                 <input type="number" name="qty"
                                     value="{{ old('qty', $product->qty) }}"
-                                    class="w-full px-4 py-2 rounded-lg border">
+                                    class="w-full px-4 py-2 rounded-lg border 
+                                        bg-white text-gray-900 
+                                        dark:bg-gray-700 dark:text-white">
                                 @error('qty')
                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                 @enderror
@@ -67,7 +71,9 @@
                                 </label>
                                 <input type="number" name="price"
                                     value="{{ old('price', $product->price) }}"
-                                    class="w-full px-4 py-2 rounded-lg border">
+                                    class="w-full px-4 py-2 rounded-lg border 
+                                        bg-white text-gray-900 
+                                        dark:bg-gray-700 dark:text-white">
                                 @error('price')
                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                 @enderror
@@ -79,7 +85,9 @@
                             <label class="block text-sm font-medium mb-1">
                                 Owner *
                             </label>
-                            <select name="user_id" class="w-full px-4 py-2 rounded-lg border">
+                            <select name="user_id" class="w-full px-4 py-2 rounded-lg border 
+                                bg-white text-gray-900 
+                                dark:bg-gray-700 dark:text-white">
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}"
                                         {{ old('user_id', $product->user_id) == $user->id ? 'selected' : '' }}>

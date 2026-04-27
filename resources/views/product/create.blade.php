@@ -13,7 +13,9 @@
 
                         <div>
                             <h2 class="text-2xl font-bold">Add Product</h2>
-                            <p class="text-sm text-gray-400">Fill in the details to add a new product</p>
+                            <p class="text-sm text-gray-400">
+                                Fill in the details to add a new product
+                            </p>
                         </div>
                     </div>
 
@@ -27,8 +29,11 @@
                                 Product Name *
                             </label>
                             <input type="text" name="name" value="{{ old('name') }}"
-                                class="w-full px-4 py-2 rounded-lg border"
-                                placeholder="e.g. Wireless Headphones">
+                                placeholder="e.g. Wireless Headphones"
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300
+                                       bg-white text-gray-900
+                                       dark:bg-gray-700 dark:text-white dark:border-gray-600
+                                       focus:ring-2 focus:ring-indigo-500">
                             @error('name')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror
@@ -41,7 +46,10 @@
                                     Quantity *
                                 </label>
                                 <input type="number" name="qty" value="{{ old('qty') }}"
-                                    class="w-full px-4 py-2 rounded-lg border">
+                                    class="w-full px-4 py-2 rounded-lg border border-gray-300
+                                           bg-white text-gray-900
+                                           dark:bg-gray-700 dark:text-white dark:border-gray-600
+                                           focus:ring-2 focus:ring-indigo-500">
                                 @error('qty')
                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                 @enderror
@@ -52,19 +60,26 @@
                                     Price *
                                 </label>
                                 <input type="number" name="price" value="{{ old('price') }}"
-                                    class="w-full px-4 py-2 rounded-lg border">
+                                    class="w-full px-4 py-2 rounded-lg border border-gray-300
+                                           bg-white text-gray-900
+                                           dark:bg-gray-700 dark:text-white dark:border-gray-600
+                                           focus:ring-2 focus:ring-indigo-500">
                                 @error('price')
                                     <p class="text-red-500 text-sm">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
 
-                        <!-- User -->
+                        <!-- Owner -->
                         <div>
                             <label class="block text-sm font-medium mb-1">
                                 Owner *
                             </label>
-                            <select name="user_id" class="w-full px-4 py-2 rounded-lg border">
+                            <select name="user_id"
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300
+                                       bg-white text-gray-900
+                                       dark:bg-gray-700 dark:text-white dark:border-gray-600
+                                       focus:ring-2 focus:ring-indigo-500">
                                 <option value="">Select Owner</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}"
@@ -78,15 +93,15 @@
                             @enderror
                         </div>
 
-                        <!-- Buttons -->
-                        <div class="flex justify-end gap-3">
+                        <!-- Actions -->
+                        <div class="flex items-center justify-end gap-3 pt-2">
                             <a href="{{ route('product.index') }}"
-                               class="px-4 py-2 border rounded-lg">
+                               class="px-4 py-2 border rounded-lg text-gray-700 dark:text-gray-300">
                                 Cancel
                             </a>
 
                             <button type="submit"
-                                class="px-4 py-2 bg-indigo-600 text-white rounded-lg">
+                                class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition">
                                 Save Product
                             </button>
                         </div>
