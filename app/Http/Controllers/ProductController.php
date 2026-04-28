@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -25,6 +26,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'qty' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
         ], [
             'name.required' => 'Nama produk wajib diisi.',
             'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter.',
@@ -72,8 +74,9 @@ class ProductController extends Controller
     public function create()
     {
         $users = User::orderBy('name')->get();
+        $categories = Category::all();
 
-        return view('product.create', compact('users'));
+        return view('product.create', compact('users', 'categories'));
     }
 
     public function show($id)
@@ -93,6 +96,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'qty' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
             'user_id' => 'sometimes|exists:users,id',
         ]);
 
@@ -104,8 +108,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $users = User::orderBy('name')->get();
+        $categories = Category::all();
 
-        return view('product.edit', compact('product', 'users'));
+        return view('product.edit', compact('product', 'users', 'categories'));
     }
 
     public function delete($id)

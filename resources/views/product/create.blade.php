@@ -70,25 +70,29 @@
                             </div>
                         </div>
 
-                        <!-- Owner -->
+                        <!-- Category -->
                         <div>
                             <label class="block text-sm font-medium mb-1">
-                                Owner *
+                                Category *
                             </label>
-                            <select name="user_id"
+
+                            <select name="category_id" required
                                 class="w-full px-4 py-2 rounded-lg border border-gray-300
-                                       bg-white text-gray-900
-                                       dark:bg-gray-700 dark:text-white dark:border-gray-600
-                                       focus:ring-2 focus:ring-indigo-500">
-                                <option value="">Select Owner</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}"
-                                        {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                        {{ $user->name }}
+                                    bg-white text-gray-900
+                                    dark:bg-gray-700 dark:text-white dark:border-gray-600
+                                    focus:ring-2 focus:ring-indigo-500">
+
+                                <option value="" disabled selected>Select Category</option>
+
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}"
+                                        {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('user_id')
+
+                            @error('category_id')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror
                         </div>

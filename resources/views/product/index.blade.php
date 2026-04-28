@@ -32,6 +32,7 @@
                                     <th class="px-6 py-3">Name</th>
                                     <th class="px-6 py-3">Quantity</th>
                                     <th class="px-6 py-3">Price</th>
+                                    <th class="px-6 py-3">Category</th>
                                     <th class="px-6 py-3">User</th>
                                     <th class="px-6 py-3 text-center">Actions</th>
                                 </tr>
@@ -48,6 +49,10 @@
 
                                         <td class="px-6 py-4">
                                             Rp {{ number_format($product->price, 0, ',', '.') }}
+                                        </td>
+
+                                        <td class="px-6 py-4">
+                                            {{ $product->category->name ?? '-' }}
                                         </td>
 
                                         <td class="px-6 py-4">
